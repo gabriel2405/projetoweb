@@ -37,11 +37,11 @@ public class ItemDao {
 		}
 	}
 
-	public Item buscaPorId(Long id) {
+	public Item buscaPorId(int id) {
 		return manager.find(Item.class, id);
 	}
 
-	public void remove(Long id) {
+	public void remove(int id) {
 		manager.createQuery("delete from Item i where i.id = :id").setParameter("id", id).executeUpdate();
 	}
 
