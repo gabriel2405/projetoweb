@@ -7,7 +7,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/resources/vendor/bootstrap/css/bootstrap.min.css" />">
+	href="<c:url value="/resources/vendor/bootstrap/css/bootstrap.css" />">
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/vendor/bootstrap-icons/bootstrap-icons.min.css" />">
 <link rel="stylesheet" type="text/css"
@@ -18,7 +18,7 @@
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+		<nav nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="<c:url value="/" />">Almoxarifado</a>
 				<button class="navbar-toggler" type="button"

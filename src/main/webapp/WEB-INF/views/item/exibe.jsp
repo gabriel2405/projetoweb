@@ -70,7 +70,7 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<a href="<c:url value="/curso/remove?id=${item.id}" />"
+						<a href="<c:url value="/item/remove?id=${item.id}" />"
 							class="btn btn-danger"> <i class="bi bi-trash"></i> Excluir
 						</a>
 						<button type="button" class="btn btn-secondary"
