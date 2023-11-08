@@ -6,15 +6,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Cadastrar Item</title>
+<title>Cadastrar Servidor/Responsavel</title>
 
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="p-5 mb-4 bg-light rounded-3">
 	<div class="container py-5">
-		<h1 class="display-5 fw-bold">Cadastrar Item</h1>
+		<h1 class="display-5 fw-bold">Cadastrar Servidor/Responsavel</h1>
 		<p class="col-md-12 fs-4">Preencha o formulário abaixo para
-			realizar o cadastro de Item no sistema.</p>
+			realizar o cadastro de Servidor/Responsavel no sistema.</p>
 	</div>
 </div>
 
@@ -30,18 +30,25 @@
 					type="text" class="form-control" name="nome" autofocus
 					MAXLENGTH="255" required>
 			</div>
+			
+			<div class="form-group">
+				<label for="email" class="col-form-label obrigatorio">Email</label> <input
+					type="text" class="form-control" name="email" 
+					MAXLENGTH="255" required>
+			</div>
+			
 
 			<div class="form-group">
-				<label for="qtd" class="col-form-label obrigatorio">Quantidade</label>
-				<input type="number" class="form-control" name="qtd" 
-					required>
+				<label for="tell" class="col-form-label">Telefone</label>
+				<input type="number" class="form-control" name="tell" 
+					>
 			</div>
 
 			<div class="form-group">
 			<label for="tipo" class="col-form-label obrigatorio">Tipo</label>
 				<select name="tipo" class="form-select" aria-label="Default select example">
-					<option selected>Permanente</option>
-					<option  value="Consumo">Consumo</option>
+					<option selected>Servidor</option>
+					<option  value="Responsavel">Responsavel</option>
 					
 				</select>
 			</div>

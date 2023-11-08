@@ -34,33 +34,25 @@
 						</a></li>
 						<li class="nav-item  dropdown"><a
 							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-							href="#" role="button" aria-haspopup="true" aria-expanded="false">Item</a>
+							href="#" role="button" aria-haspopup="true" aria-expanded="false">Cadastro</a>
 
 							<div class="dropdown-menu">
-								<a class="dropdown-item"  href="<c:url value="/item/novo" />">Cadastrar</a>
-								 <a	class="dropdown-item" href="<c:url value="/item/lista" />">Listar</a> 
-					
-							</div>
-					   </li>
-						<li class="nav-item"><a class="nav-link" href="#">Pricing</a>
-						</li>
-						<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-						<li class="nav-item dropdown"><a
+								<a class="dropdown-item" href="<c:url value="/servidor/novo" />">Servidor/Responsavel</a>
+								<a class="dropdown-item" href="<c:url value="/item/novo" />">Item</a>
+
+							</div></li>
+
+						<li class="nav-item  dropdown"><a
 							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-							href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+							href="#" role="button" aria-haspopup="true" aria-expanded="false">Relatorios</a>
+
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">Action</a> <a
-									class="dropdown-item" href="#">Another action</a> <a
-									class="dropdown-item" href="#">Something else here</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Separated link</a>
+								<a class="dropdown-item"
+									href="<c:url value="/servidor/lista" />">Servidor/Responsavel</a>
+								<a class="dropdown-item" href="<c:url value="/item/lista" />">Item</a>
+
 							</div></li>
 					</ul>
-					<form class="d-flex">
-						<input class="form-control me-sm-2" type="search"
-							placeholder="Search">
-						<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-					</form>
 				</div>
 			</div>
 		</nav>
