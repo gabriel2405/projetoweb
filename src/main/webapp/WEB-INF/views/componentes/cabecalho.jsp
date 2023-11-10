@@ -29,9 +29,6 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarColor01">
 					<ul class="navbar-nav me-auto">
-						<li class="nav-item"><a class="nav-link active" href="#">Cadastro
-								<span class="visually-hidden">(current)</span>
-						</a></li>
 						<li class="nav-item  dropdown"><a
 							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
 							href="#" role="button" aria-haspopup="true" aria-expanded="false">Cadastro</a>
@@ -39,6 +36,7 @@
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="<c:url value="/servidor/novo" />">Servidor/Responsavel</a>
 								<a class="dropdown-item" href="<c:url value="/item/novo" />">Item</a>
+								<a class="dropdown-item" href="<c:url value="/solicitacao/novo" />">Solicitação</a>
 
 							</div></li>
 
@@ -50,6 +48,19 @@
 								<a class="dropdown-item"
 									href="<c:url value="/servidor/lista" />">Servidor/Responsavel</a>
 								<a class="dropdown-item" href="<c:url value="/item/lista" />">Item</a>
+								<a class="dropdown-item" href="<c:url value="/solicitacao/lista" />">Solicitação</a>
+
+							</div></li>
+							
+							<li class="nav-item  dropdown"><a
+							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+							href="#" role="button" aria-haspopup="true" aria-expanded="false">Solicitações</a>
+
+							<div class="dropdown-menu">
+								<a class="dropdown-item"
+									href="<c:url value="/servidor/lista" />">Servidor/Responsavel</a>
+								<a class="dropdown-item" href="<c:url value="/item/lista" />">Item</a>
+								<a class="dropdown-item" href="<c:url value="/solicitacao/lista" />">Solicitação</a>
 
 							</div></li>
 					</ul>

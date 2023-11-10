@@ -11,6 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+
 @Entity
 public class Solicitacao {
 	
@@ -18,7 +19,6 @@ public class Solicitacao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
 	
@@ -29,7 +29,8 @@ public class Solicitacao {
 	@ManyToOne
 	private Servidor responsavel;
 	
-	private boolean status;
+	@NotNull
+	private String status;
 
 	public int getId() {
 		return id;
@@ -63,13 +64,15 @@ public class Solicitacao {
 		this.responsavel = responsavel;
 	}
 
-	public boolean isStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	
 	
 	
 

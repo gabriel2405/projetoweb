@@ -27,6 +27,10 @@ public class ServidorDao {
 	public List<Servidor> listar() {
 		return manager.createQuery("select s from Servidor s", Servidor.class).getResultList();
 	}
+	
+	public List<Servidor> listarServidor() {
+		return manager.createQuery("select s from Servidor s where s.tipo = 'Servidor'", Servidor.class).getResultList();
+	}
 
 
 	public List<Servidor> buscaPorTellEmail(String tell,String email) {

@@ -12,13 +12,14 @@ body{
 
 main{
     flex: 1;
-    padding-top: 20px;
 
 }
 
 .center-v{
+	 padding-top: 20px;
 	display: flex;
 	flex-direction: column;
     justify-content: center;
 }
+
 
