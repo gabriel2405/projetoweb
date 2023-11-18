@@ -46,18 +46,18 @@ public class SolicitacaoController {
 		
 	}
 	
-	@RequestMapping("/novo_item")
+	@RequestMapping("/lista_item")
 	public String novoItem(Model model) {
 		this.lista_item = itemDao.listar();
 		model.addAttribute("itens",this.lista_item);
-		return "solicitacao/novo_item";
+		return "solicitacao/lista_item";
 		
 	}
 	
 	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
 	public String adiciona(@Valid Solicitacao solicitacao, BindingResult result) {
 		solicitacao.setData(new Date());
-		System.out.println(result);
+	
 	    if (result.hasErrors()) {
 	        return "redirect:novo";
 	    }
@@ -65,7 +65,7 @@ public class SolicitacaoController {
 
 	    dao.adiciona(solicitacao);
 
-	    return "redirect:novo_item";
+	    return "redirect:lista_item";
 	}
 	
 	@RequestMapping("/lista")
