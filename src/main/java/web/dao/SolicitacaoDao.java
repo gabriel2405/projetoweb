@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import web.model.Item;
+
 import web.model.Solicitacao;
 
 @Repository
@@ -36,8 +36,8 @@ public class SolicitacaoDao {
 
 
 
-	public Item buscaPorId(int id) {
-		return manager.find(Item.class, id);
+	public Solicitacao buscaPorId(int id) {
+		return manager.find(Solicitacao.class, id);
 	}
 
 	public void remove(int id) {

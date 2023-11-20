@@ -52,7 +52,7 @@
 													<p>
 														ID (${item.id}) -> ${item.nome}<br> Quantidade Atual:
 														${item.qtd}<br> <label for="quantity">Quantidade:</label>
-														<input type="number" id="quantity" name="quantity" min="1"
+														<input type="number" id='input${item.id}' name="quantity" min="1"
 															max="${item.qtd}" required>
 													</p>
 												</div>
@@ -77,32 +77,54 @@
 
 			</div>
 		</div>
-		<table class="table table-hover" id="selectedItemsTable">
-			<thead>
-				<tr class="table-dark">
-					<th scope="col">ID</th>
-					<th scope="col">Nome</th>
-					<th scope="col">Quantidade Selecionada</th>
-					 <th scope="col">Ações</th>
-				</tr>
-			</thead>
-			<tbody id="selectedItemsBody">
+		<form action="adiciona_item_solicitacao" method="POST">
 
-			</tbody>
-		</table>
+			<table class="table table-hover" id="selectedItemsTable">
+				<thead>
+					<tr class="table-dark">
+						<th scope="col">ID</th>
+						<th scope="col">Nome</th>
+						<th scope="col">Quantidade Selecionada</th>
+						<th scope="col">Ações</th>
+					</tr>
+				</thead>
+
+				<tbody id="selectedItemsBody">
+
+				</tbody>
+
+
+
+			</table>
+			<div class="text-center">
+				<button type="submit" class="btn btn-primary btn-lg">
+					<i class="bi bi-plus-circle"></i> Cadastrar
+				</button>
+			</div>
+			<input type="number" name="id_solicitacao" hidden value='${idSolicitacao}'>
+		</form>
 
 	</div>
 </main>
 <script>
 function selectItem(itemId, itemName, maxQuantity) {
-    var quantity = document.getElementById("quantity").value;
+    var quantity = document.getElementById("input"+itemId).value;
+ 
+
     if (quantity === null || quantity === "" || isNaN(quantity) || parseInt(quantity) < 1 || parseInt(quantity) > maxQuantity) {
         alert("Por favor, insira uma quantidade válida.");
         return;
     }
+   
+		if(!document.getElementById(itemId)){
+			 var newRow = "<tr id="+itemId+" > <td>" + itemId + "<input name='itemId' hidden value="+itemId+" ></td><td>" + itemName + "</td><td>" + quantity + "<input name='qtd' hidden value="+quantity+" ></td><td><button type='button' class='btn btn-danger btn-sm' onclick='deleteRow(this)'>Excluir</button></td></tr>";
+			 document.getElementById("selectedItemsBody").innerHTML += newRow;
+		}else{
+			alert("Item já selecionado")
+		}		
+		
 
-    var newRow = "<tr><td>" + itemId + "</td><td>" + itemName + "</td><td>" + quantity + "</td><td><button type='button' class='btn btn-danger btn-sm' onclick='deleteRow(this)'>Excluir</button></td></tr>";
-    document.getElementById("selectedItemsBody").innerHTML += newRow;
+   
 }
 
 function deleteRow(button) {

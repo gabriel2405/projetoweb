@@ -15,6 +15,12 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Solicitacao {
 	
+	@Override
+	public String toString() {
+		return "Solicitacao [id=" + id + ", data=" + data + ", servidor=" + servidor + ", responsavel=" + responsavel
+				+ ", status=" + status + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
