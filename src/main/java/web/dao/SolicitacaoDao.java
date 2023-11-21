@@ -41,9 +41,28 @@ public class SolicitacaoDao {
 	}
 
 	public void remove(int id) {
-		manager.createQuery("delete from Item i where i.id = :id").setParameter("id", id).executeUpdate();
+		manager.createQuery("delete from Solicitacao s where s.id = :id").setParameter("id", id).executeUpdate();
 	}
 	
+	public List<Solicitacao> listar_incompleta() {
+	    return manager.createQuery(
+	    		"SELECT s FROM Solicitacao s "+
+	    		"WHERE NOT EXISTS (" +
+	    		   " SELECT 1 FROM ItemSolicitacao i "+
+	    		    "WHERE i.solicitacao = s)"
+	    	,Solicitacao.class
+	    ).getResultList();
+	}
 	
+	public List<Solicitacao> listar_pendentes() {
+		return manager.createQuery(
+		        "SELECT s FROM Solicitacao s " +
+		        "WHERE s.status = 'pendente' " +
+		        "AND EXISTS (" +
+		        "    SELECT 1 FROM ItemSolicitacao i WHERE i.solicitacao = s" +
+		        ")",
+		        Solicitacao.class
+		    ).getResultList();
+	}
 
 }

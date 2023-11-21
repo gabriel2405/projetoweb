@@ -60,7 +60,9 @@ public class ItemController {
 
 	@RequestMapping("/remove")
 	public String remove(Item item) {
-		dao.remove(item.getId());
+		if(dao.buscaPorId(item.getId()) != null) {
+			dao.remove(item.getId());
+		}
 		return "redirect:lista";
 	}
 	

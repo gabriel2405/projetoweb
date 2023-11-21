@@ -52,14 +52,7 @@ public class SolicitacaoController {
 		
 	}
 	
-	@RequestMapping("/lista_item")
-	public String novoItem(int id,Model model) {
-		this.lista_item = itemDao.listar();
-		model.addAttribute("idSolicitacao",id);
-		model.addAttribute("itens",this.lista_item);
-		return "solicitacao/lista_item";
-		
-	}
+
 	
 	@RequestMapping(value = "/adiciona_item_solicitacao", method = RequestMethod.POST)
 	public String adiciona(int id_solicitacao, int[] itemId,int[] qtd) {
@@ -71,10 +64,9 @@ public class SolicitacaoController {
 				itemSolicitacao.setItem(item);
 				itemSolicitacao.setQtd(qtd[i]);
 				itemSolicitacao.setSolicitacao(solicitacao);
-				itemSolicitacaoDao.adiciona(itemSolicitacaoDao);
+				itemSolicitacaoDao.adiciona(itemSolicitacao);
 				
-			}
-			
+			}		
 			return "redirect:lista";
 		}else {
 			return "redirect:lista_item?id="+id_solicitacao;
@@ -93,10 +85,86 @@ public class SolicitacaoController {
 	    return "redirect:lista_item?id=" + solicitacao.getId();
 	}
 	
+	@RequestMapping("/lista_item")
+	public String novoItem(int id,Model model) {
+		this.lista_item = itemDao.listar();
+		model.addAttribute("idSolicitacao",id);
+		model.addAttribute("itens",this.lista_item);
+		return "solicitacao/lista_item";
+		
+	}
+	
 	@RequestMapping("/lista")
 	public String lista(Model model) {
 		this.lista_solicitacao = dao.listar();
 		model.addAttribute("solicitacoes", this.lista_solicitacao);
 		return "solicitacao/lista";
 	}
+	
+	
+	
+	@RequestMapping("/lista_incompleta")
+	public String listaIncompleta(Model model) {
+		this.lista_solicitacao = dao.listar_incompleta();
+		model.addAttribute("solicitacoes", this.lista_solicitacao);
+		model.addAttribute("status","incompleta");
+		return "solicitacao/lista";
+	}
+	
+	@RequestMapping("/lista_pendente")
+	public String listaPendente(Model model) {
+		this.lista_solicitacao = dao.listar_pendentes();
+		model.addAttribute("solicitacoes", this.lista_solicitacao);
+		model.addAttribute("status","pendente");
+		return "solicitacao/lista";
+	}
+	
+	
+	
+	@RequestMapping("/edita")
+	public String edita(int id, Model model) {
+		if( dao.buscaPorId(id)!=null) {
+			this.lista_servidor = servidorDao.listarServidor();
+			model.addAttribute("servidores",this.lista_servidor);
+			model.addAttribute("solicitacao", dao.buscaPorId(id));
+			return "solicitacao/edita";
+		}
+		 return "redirect:lista_incompleta"; 
+	}
+	
+	@RequestMapping("/exibe")
+	public String editaItem(int id, Model model) {
+		if( dao.buscaPorId(id)!=null) {
+			model.addAttribute("itemSolicitacao",itemSolicitacaoDao.listarItensPorSolicitacaoId(id));
+			return "solicitacao/exibe";
+		}
+		 return "redirect:lista_pendente"; 
+		
+	}
+	
+	@RequestMapping("/altera")
+	public String altera(@Valid Solicitacao solicitacao, BindingResult result) {
+		
+		System.out.println(result);
+		solicitacao.setData(new Date());
+	    if (result.hasErrors()) {
+	        return "redirect:edita?"+solicitacao.getId();
+	    }
+	    
+	    dao.alterar(solicitacao);
+	    return "redirect:lista_incompleta";
+		
+	}
+	
+	@RequestMapping("/remove")
+	public String remove(int id) {
+		System.out.println(id);
+		if(dao.buscaPorId(id) != null) {
+			dao.remove(id);
+		}
+		
+		return "redirect:lista_incompleta";
+	}
+	
+	
 }

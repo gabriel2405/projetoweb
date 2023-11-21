@@ -58,9 +58,9 @@
 
 							<div class="dropdown-menu">
 								<a class="dropdown-item"
-									href="<c:url value="/servidor/lista" />">Servidor/Responsavel</a>
-								<a class="dropdown-item" href="<c:url value="/item/lista" />">Item</a>
-								<a class="dropdown-item" href="<c:url value="/solicitacao/lista" />">Solicitação</a>
+									href="<c:url value="/solicitacao/lista_incompleta"/>">Incompletas</a>
+								<a class="dropdown-item" href="<c:url value="/solicitacao/lista_pendente"/>">Pendentes</a>
+								<a class="dropdown-item" href="<c:url value="/solicitacao/lista_concluida"/>">Concluidas</a>
 
 							</div></li>
 					</ul>
