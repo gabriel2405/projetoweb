@@ -90,7 +90,7 @@
 								<td><c:choose>
 										<c:when test="${status eq 'pendente'}">
 											<a
-												href="<c:url value="/solicitacao/edita_item?id=${solicitacao.id}" />"
+												href="<c:url value="/solicitacao/lista_item?id=${solicitacao.id}" />"
 												class="btn btn-warning btn-sm" data-toggle="tooltip"
 												data-bs-placement="bottom" title="Editar"> <i
 												class="bi bi-pencil-square"></i>

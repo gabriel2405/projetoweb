@@ -46,9 +46,12 @@ public class SolicitacaoController {
 	
 	@RequestMapping("/novo")
 	public String novo(Model model) {
-		this.lista_servidor = servidorDao.listarServidor();
-		model.addAttribute("servidores",this.lista_servidor);
-		return "solicitacao/novo";
+		if(servidorDao.listarServidor().size()>0 && itemDao.listar().size() >0) {
+			this.lista_servidor = servidorDao.listarServidor();
+			model.addAttribute("servidores",this.lista_servidor);
+			return "solicitacao/novo";
+		}
+		return "index";
 		
 	}
 	
@@ -67,7 +70,7 @@ public class SolicitacaoController {
 				itemSolicitacaoDao.adiciona(itemSolicitacao);
 				
 			}		
-			return "redirect:lista";
+			return "redirect:lista_pendente";
 		}else {
 			return "redirect:lista_item?id="+id_solicitacao;
 		}
@@ -87,10 +90,15 @@ public class SolicitacaoController {
 	
 	@RequestMapping("/lista_item")
 	public String novoItem(int id,Model model) {
-		this.lista_item = itemDao.listar();
-		model.addAttribute("idSolicitacao",id);
-		model.addAttribute("itens",this.lista_item);
-		return "solicitacao/lista_item";
+		if(dao.buscaPorId(id) != null) {
+			this.lista_item = itemDao.listar();
+			model.addAttribute("idSolicitacao",id);
+			model.addAttribute("itens",this.lista_item);
+			model.addAttribute("itensSolicitacao",itemSolicitacaoDao.listarItensPorSolicitacaoId(id));
+			return "solicitacao/lista_item";
+		}
+		
+		return "redirect:novo";
 		
 	}
 	
@@ -130,6 +138,21 @@ public class SolicitacaoController {
 			return "solicitacao/edita";
 		}
 		 return "redirect:lista_incompleta"; 
+	}
+	
+	
+
+	@RequestMapping(value = "/edita_item_solicitacao", method = RequestMethod.POST)
+	public String editaItem(int id_solicitacao, int[] itemId,int[] qtd) {
+		if(itemId != null && itemId.length>0) {
+			for(int i=0;i<itemId.length;i++) {
+				
+			}
+			return "redirect:lista_pendente";
+		}else {
+			return "redirect:lista_item?id="+id_solicitacao;
+		}
+		
 	}
 	
 	@RequestMapping("/exibe")

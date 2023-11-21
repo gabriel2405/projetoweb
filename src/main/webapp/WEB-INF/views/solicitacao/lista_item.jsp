@@ -52,8 +52,8 @@
 													<p>
 														ID (${item.id}) -> ${item.nome}<br> Quantidade Atual:
 														${item.qtd}<br> <label for="quantity">Quantidade:</label>
-														<input type="number" id='input${item.id}' name="quantity" min="1"
-															max="${item.qtd}" required>
+														<input type="number" id='input${item.id}' name="quantity"
+															min="1" max="${item.qtd}" required>
 													</p>
 												</div>
 												<div class="modal-footer">
@@ -77,7 +77,7 @@
 
 			</div>
 		</div>
-		<form action="adiciona_item_solicitacao" method="POST">
+		<form action="${itensSolicitacao.size() > 0? 'edita_item_solicitacao':'adiciona_item_solicitacao'} " method="POST">
 
 			<table class="table table-hover" id="selectedItemsTable">
 				<thead>
@@ -90,7 +90,20 @@
 				</thead>
 
 				<tbody id="selectedItemsBody">
+					<c:if test="${itensSolicitacao.size() > 0}">
+						<c:forEach var="itemSolicitacao" items="${itensSolicitacao}">
+							<tr id="${itemSolicitacao.item.id}">
+								<td>${itemSolicitacao.item.id}<input name='itemId'
+									hidden value="${itemSolicitacao.item.id}"></td>
+								<td>${itemSolicitacao.item.nome}</td>
+								<td>${itemSolicitacao.qtd}<input name='qtd' hidden
+									value="${itemSolicitacao.qtd}"></td>
+								<td><button type='button' class='btn btn-danger btn-sm'
+										onclick='deleteRow(this)'>Excluir</button></td>
+							</tr>
+						</c:forEach>
 
+					</c:if>
 				</tbody>
 
 
@@ -98,10 +111,11 @@
 			</table>
 			<div class="text-center">
 				<button type="submit" class="btn btn-primary btn-lg">
-					<i class="bi bi-plus-circle"></i> Cadastrar
+					<i class="bi bi-plus-circle"></i> ${itensSolicitacao.size() > 0? "Alterar" : "Cadastrar"}
 				</button>
 			</div>
-			<input type="number" name="id_solicitacao" hidden value='${idSolicitacao}'>
+			<input type="number" name="id_solicitacao" hidden
+				value='${idSolicitacao}'>
 		</form>
 
 	</div>
