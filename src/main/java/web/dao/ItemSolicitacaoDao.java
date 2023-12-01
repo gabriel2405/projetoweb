@@ -41,6 +41,11 @@ public class ItemSolicitacaoDao {
 		manager.createQuery("delete from ItemSolicitacao i where i.id = :id").setParameter("id", id).executeUpdate();
 	}
 	
+
+	public void deleteBySolicitacaoId(int solicitacaoId) {
+		manager.createQuery("DELETE FROM ItemSolicitacao i WHERE i.solicitacao.id = :solicitacaoId").setParameter("solicitacaoId", solicitacaoId).executeUpdate();
+	}
+	
 	public List<ItemSolicitacao> listarItensPorSolicitacaoId(int solicitacaoId) {
 		TypedQuery<ItemSolicitacao> query = manager.createQuery(
 			"SELECT i FROM ItemSolicitacao i WHERE i.solicitacao.id = :solicitacaoId", ItemSolicitacao.class);

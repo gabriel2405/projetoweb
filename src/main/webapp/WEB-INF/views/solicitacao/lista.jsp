@@ -33,13 +33,13 @@
 						<c:forEach var="solicitacao" items="${solicitacoes}">
 							<tr>
 								<td scope="row">${solicitacao.id}</td>
-								<td>${solicitacao.servidor.nome}
-									<button type="button" class="btn btn-info btn-sm"
-										data-toggle="tooltip" data-bs-placement="bottom"
-										title="Exibir" data-bs-toggle="modal"
-										data-bs-target="#modal${solicitacao.servidor.id}">
-										<i class="bi bi-eye"></i>
-									</button>
+								<td><a href="" data-toggle="tooltip"
+									data-bs-placement="bottom" title="Exibir"
+									data-bs-toggle="modal"
+									data-bs-target="#modal${solicitacao.servidor.id}">${solicitacao.servidor.nome}</a>
+
+
+
 									<div class="modal fade" id="modal${solicitacao.servidor.id}"
 										tabindex="-1">
 										<div class="modal-dialog" role="document">
@@ -80,15 +80,14 @@
 												</div>
 											</div>
 										</div>
-									</div>
-								</td>
+									</div></td>
 								<c:if test="${not empty solicitacoes[0].responsavel}">
 									<td>${solicitacao.responsavel.nome}</td>
 								</c:if>
 								<td>${solicitacao.data}</td>
 								<td>${solicitacao.status}</td>
 								<td><c:choose>
-										<c:when test="${status eq 'pendente'}">
+										<c:when test="${status eq 'pendente' && !responsavel}">
 											<a
 												href="<c:url value="/solicitacao/lista_item?id=${solicitacao.id}" />"
 												class="btn btn-warning btn-sm" data-toggle="tooltip"
@@ -96,11 +95,21 @@
 												class="bi bi-pencil-square"></i>
 											</a>
 
-											<a href="<c:url value="/solicitacao/exibe?id=${solicitacao.id}"/>"
+											<a
+												href="<c:url value="/solicitacao/exibe?id=${solicitacao.id}"/>"
 												class="btn btn-info btn-sm" data-toggle="tooltip"
 												data-bs-placement="bottom" title="Exibir"> <i
 												class="bi bi-eye"></i>
 											</a>
+										</c:when>
+										<c:when test="${responsavel}">
+											<a href="#" title="Confirmar" class="btn btn-success btn-sm"
+												role="button"> <i class="bi bi-check-lg"></i>
+											</a>
+
+											<!-- Botão de Cancelamento com Ícone -->
+											<a href="#" title="Cancelar" class="btn btn-danger btn-sm"
+												role="button"><i class="bi bi-x-lg"></i></a>
 
 										</c:when>
 										<c:otherwise>
@@ -159,13 +168,16 @@
 				</table>
 			</div>
 		</div>
+		<c:if test="${!responsavel}">
+			<div align="center">
+				<a href="<c:url value="/solicitacao/novo" />"
+					class="btn btn-primary btn-lg"> <i class="bi bi-plus-circle"></i>
+					Cadastrar
+				</a>
+			</div>
 
-		<div align="center">
-			<a href="<c:url value="/solicitacao/novo" />"
-				class="btn btn-primary btn-lg"> <i class="bi bi-plus-circle"></i>
-				Cadastrar
-			</a>
-		</div>
+		</c:if>
+
 	</div>
 </main>
 <c:import url="../componentes/rodape.jsp" />

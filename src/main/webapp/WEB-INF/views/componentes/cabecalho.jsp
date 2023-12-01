@@ -63,6 +63,18 @@
 								<a class="dropdown-item" href="<c:url value="/solicitacao/lista_concluida"/>">Concluidas</a>
 
 							</div></li>
+							
+							<li class="nav-item  dropdown"><a
+							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+							href="#" role="button" aria-haspopup="true" aria-expanded="false">Responsavel</a>
+
+							<div class="dropdown-menu">
+								<a class="dropdown-item"
+									href="<c:url value="/solicitacao/lista_pendente?responsavel=true"/>">Solicitações</a>
+								<a class="dropdown-item" href="<c:url value="/solicitacao/lista_pendente"/>">Pendentes</a>
+								<a class="dropdown-item" href="<c:url value="/solicitacao/lista_concluida"/>">Concluidas</a>
+
+							</div></li>
 					</ul>
 				</div>
 			</div>
