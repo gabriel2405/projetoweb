@@ -36,11 +36,11 @@
 								<td><a href="" data-toggle="tooltip"
 									data-bs-placement="bottom" title="Exibir"
 									data-bs-toggle="modal"
-									data-bs-target="#modal${solicitacao.servidor.id}">${solicitacao.servidor.nome}</a>
+									data-bs-target="#modal${solicitacao.servidor.id}-${solicitacao.id}">${solicitacao.servidor.nome} </a>
 
 
 
-									<div class="modal fade" id="modal${solicitacao.servidor.id}"
+									<div class="modal fade" id="modal${solicitacao.servidor.id}-${solicitacao.id}"
 										tabindex="-1">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
@@ -67,7 +67,7 @@
 																<td scope="row">${solicitacao.servidor.id}</td>
 																<td>${solicitacao.servidor.nome}</td>
 																<td>${solicitacao.servidor.email}</td>
-																<td>${solicitacao.servidor.tell}</td>
+																<td>${solicitacao.servidor.tell}  </td>
 															</tr>
 														</tbody>
 													</table>
@@ -82,12 +82,65 @@
 										</div>
 									</div></td>
 								<c:if test="${not empty solicitacoes[0].responsavel}">
-									<td>${solicitacao.responsavel.nome}</td>
+									<td>
+									
+									
+									
+									<a href="" data-toggle="tooltip"
+									data-bs-placement="bottom" title="Exibir"
+									data-bs-toggle="modal"
+									data-bs-target="#modal${solicitacao.responsavel.id}-${solicitacao.id}">${solicitacao.responsavel.nome} </a>
+
+
+
+									<div class="modal fade" id="modal${solicitacao.responsavel.id}-${solicitacao.id}"
+										tabindex="-1">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title">Dados do Servidor</h5>
+													<button type="button" class="btn-close"
+														data-bs-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true"></span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<table class="table datatable" id="datatable">
+														<thead>
+															<tr>
+																<th scope="col">ID</th>
+																<th scope="col">Nome</th>
+																<th scope="col">Email</th>
+																<th scope="col">Telefone</th>
+															</tr>
+														</thead>
+														<tbody>
+
+															<tr>
+																<td scope="row">${solicitacao.responsavel.id}</td>
+																<td>${solicitacao.responsavel.nome}</td>
+																<td>${solicitacao.responsavel.email}</td>
+																<td>${solicitacao.responsavel.tell}  </td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">
+														<i class="bi bi-x"></i> Fechar
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									</td>
 								</c:if>
-								<td>${solicitacao.data}</td>
+								<td>${solicitacao.data} </td>
 								<td>${solicitacao.status}</td>
 								<td><c:choose>
-										<c:when test="${status eq 'pendente' && !responsavel}">
+										<c:when test="${status eq 'pendente' && responsavel eq null}">
 											<a
 												href="<c:url value="/solicitacao/lista_item?id=${solicitacao.id}" />"
 												class="btn btn-warning btn-sm" data-toggle="tooltip"
@@ -102,15 +155,67 @@
 												class="bi bi-eye"></i>
 											</a>
 										</c:when>
-										<c:when test="${responsavel}">
-											<a href="#" title="Confirmar" class="btn btn-success btn-sm"
+										<c:when test="${not empty responsavel}">
+										<a
+												href="<c:url value="/solicitacao/exibe?id=${solicitacao.id}"/>"
+												class="btn btn-info btn-sm" data-toggle="tooltip"
+												data-bs-placement="bottom" title="Exibir"> <i
+												class="bi bi-eye"></i>
+											</a>
+											<a href="<c:url value="/solicitacao/aceitar_solicitacao?idSolicitacao=${solicitacao.id}&idResponsavel=${responsavel.id}" />" title="Confirmar" class="btn btn-success btn-sm"
 												role="button"> <i class="bi bi-check-lg"></i>
 											</a>
 
 											<!-- Botão de Cancelamento com Ícone -->
-											<a href="#" title="Cancelar" class="btn btn-danger btn-sm"
+											<a href="<c:url value="/solicitacao/recusar_solicitacao?idSolicitacao=${solicitacao.id}&idResponsavel=${responsavel.id}" />" title="Cancelar" class="btn btn-danger btn-sm"
 												role="button"><i class="bi bi-x-lg"></i></a>
 
+										</c:when>
+										<c:when test="${status eq 'aceito'}">
+										<a
+												href="<c:url value="/solicitacao/exibe?id=${solicitacao.id}"/>"
+												class="btn btn-info btn-sm" data-toggle="tooltip"
+												data-bs-placement="bottom" title="Exibir"> <i
+												class="bi bi-eye"></i>
+											</a>
+										<button type="button" class="btn btn-danger btn-sm"
+												data-toggle="tooltip" data-bs-placement="bottom"
+												title="Excluir" data-bs-toggle="modal"
+												data-bs-target="#modal${solicitacao.id}">
+												<i class="bi bi-trash"></i>
+											</button>
+											<div class="modal fade" id="modal${solicitacao.id}"
+												tabindex="-1">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title">Exclusão da Solicitação</h5>
+															<button type="button" class="btn-close"
+																data-bs-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true"></span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<p>
+																Deseja realmente excluir a Solicitação? <br>ID da
+																Solicitação: ${solicitacao.id}
+
+															</p>
+														</div>
+														<div class="modal-footer">
+															<a
+																href="<c:url value="/solicitacao/remove?id=${solicitacao.id}" />"
+																class="btn btn-danger"> <i class="bi bi-trash"></i>
+																Excluir
+															</a>
+															<button type="button" class="btn btn-secondary"
+																data-bs-dismiss="modal">
+																<i class="bi bi-x"></i> Fechar
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
 										</c:when>
 										<c:otherwise>
 											<a
@@ -168,7 +273,7 @@
 				</table>
 			</div>
 		</div>
-		<c:if test="${!responsavel}">
+		<c:if test="${responsavel eq null and status eq 'pendente'}">
 			<div align="center">
 				<a href="<c:url value="/solicitacao/novo" />"
 					class="btn btn-primary btn-lg"> <i class="bi bi-plus-circle"></i>

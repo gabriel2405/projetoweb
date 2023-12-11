@@ -70,10 +70,7 @@
 
 							<div class="dropdown-menu">
 								<a class="dropdown-item"
-									href="<c:url value="/solicitacao/lista_pendente?responsavel=true"/>">Solicitações</a>
-								<a class="dropdown-item" href="<c:url value="/solicitacao/lista_pendente"/>">Pendentes</a>
-								<a class="dropdown-item" href="<c:url value="/solicitacao/lista_concluida"/>">Concluidas</a>
-
+									href="<c:url value="/solicitacao/responder_solicitacao"/>">Solicitações</a>
 							</div></li>
 					</ul>
 				</div>

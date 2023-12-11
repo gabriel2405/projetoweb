@@ -25,7 +25,8 @@ public class ItemDao {
 	}
 
 	public List<Item> listar() {
-		return manager.createQuery("select i from Item i", Item.class).getResultList();
+	    return manager.createQuery("SELECT i FROM Item i WHERE i.qtd > 0", Item.class)
+	                  .getResultList();
 	}
 
 	public Item buscaPorNome(String nome) {

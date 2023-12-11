@@ -65,4 +65,16 @@ public class SolicitacaoDao {
 		    ).getResultList();
 	}
 
+	public List<Solicitacao> listarConcluidas() {
+	    return manager.createQuery(
+	        "SELECT s FROM Solicitacao s " +
+	        "WHERE (s.status = 'Aceito' OR s.status = 'Recusado') " +
+	        "AND EXISTS (" +
+	        "    SELECT 1 FROM ItemSolicitacao i WHERE i.solicitacao = s" +
+	        ")",
+	        Solicitacao.class
+	    ).getResultList();
+	}
+
+
 }

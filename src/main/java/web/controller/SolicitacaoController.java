@@ -26,7 +26,8 @@ import web.model.Solicitacao;
 @Controller
 @RequestMapping("/solicitacao")
 public class SolicitacaoController {
-
+    
+	private List<ItemSolicitacao> lista_itemSolicitacao;
 	private List<Servidor> lista_servidor;
 	private List<Solicitacao> lista_solicitacao;
 	private List<Item> lista_item;
@@ -115,15 +116,27 @@ public class SolicitacaoController {
 	}
 
 	@RequestMapping("/lista_pendente")
-	public String listaPendente(boolean responsavel, Model model) {
+	public String listaPendente(Integer id, Model model) {
+		
 		this.lista_solicitacao = dao.listar_pendentes();
 		model.addAttribute("solicitacoes", this.lista_solicitacao);
 		model.addAttribute("status", "pendente");
-
-		model.addAttribute("responsavel", responsavel);
+		if(id != null && servidorDao.buscaPorId(id) != null) {
+			model.addAttribute("responsavel", servidorDao.buscaPorId(id));
+		}
+		
 
 		return "solicitacao/lista";
 	}
+	
+	@RequestMapping("/lista_concluida")
+	public String listaConcluida(Model model) {
+		this.lista_solicitacao = dao.listarConcluidas();
+		model.addAttribute("solicitacoes", this.lista_solicitacao);
+		model.addAttribute("status", "aceito");
+		return "solicitacao/lista";
+	}
+	
 
 	@RequestMapping("/edita")
 	public String edita(int id, Model model) {
@@ -197,12 +210,75 @@ public class SolicitacaoController {
 
 	@RequestMapping("/remove")
 	public String remove(int id) {
-		System.out.println(id);
+		
 		if (dao.buscaPorId(id) != null) {
+			boolean apagou = false;
+			List<ItemSolicitacao> lista_itemSolicitacao = itemSolicitacaoDao.listarItensPorSolicitacaoId(id);
+			if(lista_itemSolicitacao.size()>0) {
+				apagou = true;
+				itemSolicitacaoDao.deleteBySolicitacaoId(id);
+			}
 			dao.remove(id);
+			
+			if(apagou) {
+			return	"redirect:lista_concluida";
+			}
 		}
 
 		return "redirect:lista_incompleta";
 	}
+	
+	
+	@RequestMapping("/responder_solicitacao")
+	public String solicitacao(Model model) {
+		model.addAttribute("responsaveis",servidorDao.listarResponsavel());
+		return "responsavel/solicitacao";
+	}
 
+	@RequestMapping("/aceitar_solicitacao")
+	public String aceitaSolicitacao(Integer idResponsavel,Integer idSolicitacao) {
+		if(idResponsavel == null && idSolicitacao == null) {
+			return "redirect:responder_solicitacao";
+		}
+		    lista_itemSolicitacao = itemSolicitacaoDao.listarItensPorSolicitacaoId(idSolicitacao);
+			
+		    boolean achou = false;
+		    for(int i =0;i< lista_itemSolicitacao.size();i++) {
+		    	Item item = itemDao.buscaPorId(lista_itemSolicitacao.get(i).getItem().getId());
+		    	if( lista_itemSolicitacao.get(i).getQtd() > item.getQtd()) {
+		    		achou = true;
+		    		break;
+		    	}
+		    }
+		    
+		    if(!achou) {		    	 
+		    	Servidor Responsavel = servidorDao.buscaPorId(idResponsavel);
+				Solicitacao solicitacao = dao.buscaPorId(idSolicitacao);
+				solicitacao.setResponsavel(Responsavel);
+				solicitacao.setStatus("Aceito");
+				for(int i =0;i< lista_itemSolicitacao.size();i++) {
+			    	Item item =itemDao.buscaPorId(lista_itemSolicitacao.get(i).getItem().getId());
+			    	item.setQtd(item.getQtd() - lista_itemSolicitacao.get(i).getQtd());
+			    	
+			    }
+		    }
+			
+		
+		
+		return "redirect:lista_pendente?id="+idResponsavel;
+	}
+	
+	@RequestMapping("/recusar_solicitacao")
+	public String recusarSolicitacao(Integer idResponsavel,Integer idSolicitacao) {
+		if(idResponsavel == null && idSolicitacao == null) {
+			return "redirect:responder_solicitacao";
+		}
+		Servidor Responsavel = servidorDao.buscaPorId(idResponsavel);
+		Solicitacao solicitacao = dao.buscaPorId(idSolicitacao);
+		solicitacao.setResponsavel(Responsavel);
+		solicitacao.setStatus("Recusado");
+		return "redirect:lista_pendente?id="+idResponsavel;
+	}
+	
+	
 }

@@ -24,10 +24,17 @@
 							<th width="30%" colspan="2">ID</th>
 							<td colspan="3">${itemSolicitacao[0].solicitacao.id}</td>
 						</tr>
+						
 						<tr>
 							<th colspan="2">Servidor</th>
 							<td colspan="3" style="font-weight: bold; color: blue;">${itemSolicitacao[0].solicitacao.servidor.nome}</td>
 						</tr>
+						<c:if test="${not empty itemSolicitacao[0].solicitacao.responsavel.nome}">
+						<tr>
+							<th colspan="2">Responsavel</th>
+							<td colspan="3" style="font-weight: bold; color: blue;">${itemSolicitacao[0].solicitacao.responsavel.nome}</td>
+						</tr>
+						</c:if>
 						<tr>
 							<th colspan="2">Data</th>
 							<td colspan="3" style="font-weight: bold; color: blue;">${itemSolicitacao[0].solicitacao.data}</td>
